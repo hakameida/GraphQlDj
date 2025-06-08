@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -55,13 +57,18 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
      'myapp.middleware.GraphQLTokenMiddleware',
+     'whitenoise.middleware.WhiteNoiseMiddleware',
 
 ]
 CORS_ALLOW_ALL_ORIGINS = True
+import os
+
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8000",   # If you're opening your HTML from VS Code Live Server
-    "http://127.0.0.1:8000",   # Or whatever port your frontend is running on
+    "http://localhost:3000",  # for local development
+    "http://127.0.0.1:3000",
+    os.environ.get("FRONTEND_URL", ""),  # add deployed frontend here via env
 ]
+
 
 ROOT_URLCONF = 'myproject.urls'
 
@@ -138,8 +145,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
-
-# Default primary key field type
+STATIC_ROOT = BASE_DIR / 'staticfiles' 
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -148,3 +154,4 @@ MEDIA_ROOT = BASE_DIR / 'media'
 GRAPHENE = {
     "SCHEMA": "MYPROJECT.schema.schema"
 }
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
