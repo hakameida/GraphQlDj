@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
-
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -60,8 +60,8 @@ MIDDLEWARE = [
      'whitenoise.middleware.WhiteNoiseMiddleware',
 
 ]
+
 CORS_ALLOW_ALL_ORIGINS = True
-import os
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # for local development
@@ -69,8 +69,13 @@ CORS_ALLOWED_ORIGINS = [
     "https://spacenetserver.up.railway.app",
     os.environ.get("FRONTEND_URL", ""),  # add deployed frontend here via env
 ]
+load_dotenv()
 
-
+CSRF_TRUSTED_ORIGINS = [
+    "https://spacenetserver.up.railway.app",
+]
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 ROOT_URLCONF = 'myproject.urls'
 
 TEMPLATES = [
