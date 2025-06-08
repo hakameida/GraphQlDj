@@ -66,6 +66,7 @@ import os
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # for local development
     "http://127.0.0.1:3000",
+    "https://spacenetserver.up.railway.app",
     os.environ.get("FRONTEND_URL", ""),  # add deployed frontend here via env
 ]
 
