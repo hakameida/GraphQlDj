@@ -17,6 +17,12 @@ class ProductType(graphene.ObjectType):
     url3 = graphene.String()
     url4 = graphene.String()
     url5 = graphene.String()
+    image1=graphene.String()
+    image2=graphene.String()
+    image3=graphene.String()
+    image4=graphene.String()
+    image5=graphene.String()
+    
     description = graphene.String()
     discount = graphene.String()
     status = graphene.Boolean()
@@ -48,6 +54,16 @@ class ProductType(graphene.ObjectType):
 
     def resolve_url5(self, info):
         return self.url5
+    def resolve_image1(self, info):
+            return self.image1
+    def resolve_image2(self, info):
+            return self.image2
+    def resolve_image3(self, info):
+            return self.image3
+    def resolve_image4(self, info):
+            return self.image4
+    def resolve_image5(self, info):
+            return self.image5
 
     def resolve_description(self, info):
         return self.description
