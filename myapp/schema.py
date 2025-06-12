@@ -1,6 +1,6 @@
 import graphene
 from graphene_django.types import DjangoObjectType
-from .models import Product, ProductType,DollarPrice
+from .models import Product, ProductType,DollarPrice , offer
 
 
 class ProductTypeType(DjangoObjectType):
@@ -81,9 +81,15 @@ class DollarPriceType(DjangoObjectType):
     class Meta:
         model = DollarPrice
         fields = ("id", "dollar_price") 
+class offerType(DjangoObjectType):
+     class Meta:
+          model= offer 
+          fields = "__all__"
 class Query(graphene.ObjectType):
     all_products = graphene.List(ProductType, type=graphene.String(), status=graphene.Boolean())
+    all_offers = graphene.List(offerType, type=graphene.String(), status=graphene.Boolean())
     product_by_id = graphene.Field(ProductType, id=graphene.ID())
+    offer_by_id =graphene.Field(offerType, id=graphene.ID())
     product_types = graphene.List(ProductTypeType)
     search_products = graphene.List(ProductType, word=graphene.String())
     dollar_price_by_pk = graphene.Field(DollarPriceType, id=graphene.UUID(required=True))
@@ -94,6 +100,13 @@ class Query(graphene.ObjectType):
         if status is not None:
             qs = qs.filter(status=status)
         return qs
+    def resolve_all_offers(self, info, type=None, status=None):
+        qs = offer.objects.all()
+        if status is not None:
+            qs = qs.filter(status=status)
+        return qs
+    def  resolve_offer_by_id(self, info, id):
+        return offer.objects.get(id=id)
 
     def resolve_product_by_id(self, info, id):
         return Product.objects.get(id=id)
