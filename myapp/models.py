@@ -13,7 +13,7 @@ class offer (models.Model):
     url1 = models.URLField(blank=True)
     url2 = models.URLField(blank=True)
     def __str__(self):
-        return self.model_name
+        return self.name
 class Laptop(models.Model):
     model_name = models.CharField(max_length=255)
     price_syp = models.DecimalField(max_digits=10, decimal_places=2)
